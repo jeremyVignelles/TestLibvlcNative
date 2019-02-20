@@ -1,24 +1,42 @@
 #!/bin/bash
 
+#Fail on error
+set -e
+
 cd `dirname "$0"`
 
 VLC_VERSION=3.0.6
 
-if [[ ! -d vlc-$VLC_VERSION ]]; then
-    wget https://get.videolan.org/vlc/$VLC_VERSION/win64/vlc-$VLC_VERSION-win64.7z
-
-    7z x vlc-$VLC_VERSION-win64.7z
-fi
-
+case "$TARGET_PLATFORM" in
+  "win32")
+    export HOST_COMPILER="i686-w64-mingw32"
+    export PATH="/opt/gcc-$HOST_COMPILER/bin:$PATH"
+    ;;
+  "win64")
+    export HOST_COMPILER="x86_64-w64-mingw32"
+    export PATH="/opt/gcc-$HOST_COMPILER/bin:$PATH"
+  ;;
+  *)
+    echo "TARGET_PLATFORM is unspecified"
+  return 1;
+esac
 
 if [[ ! -d bin ]]; then
-    mkdir bin
-    cp vlc-$VLC_VERSION/libvlc.dll bin
-    cp vlc-$VLC_VERSION/libvlccore.dll bin
-    cp -r vlc-$VLC_VERSION/hrtfs bin
-    cp -r vlc-$VLC_VERSION/locale bin
-    cp -r vlc-$VLC_VERSION/lua bin
-    cp -r vlc-$VLC_VERSION/plugins bin
+    if [[ ! -f vlc-$VLC_VERSION-$TARGET_PLATFORM.7z ]]; then
+      wget https://get.videolan.org/vlc/$VLC_VERSION/$TARGET_PLATFORM/vlc-$VLC_VERSION-$TARGET_PLATFORM.7z
+    fi
+
+    7z x vlc-$VLC_VERSION-win64.7z
+    mv vlc-$VLC_VERSION/ bin
+
+    # Change prefix root of package config files
+    sed -i -e "s+^prefix=.*+prefix=$(pwd)/bin/sdk+" bin/sdk/lib/pkgconfig/*.pc
+
+    cp /opt/qt/bin/{Qt5Core,Qt5Gui,Qt5Widgets}.dll bin
+    mkdir bin/platforms
+    cp /opt/qt/plugins/platforms/qwindows.dll bin/platforms/
 fi
 
-x86_64-w64-mingw32-gcc main.c -I/src/vlc-$VLC_VERSION/sdk/include -L/src/vlc-$VLC_VERSION/sdk/lib -lvlccore -lvlc -o bin/testVlc.exe
+cd bin
+cmake -DCMAKE_TOOLCHAIN_FILE=/Toolchain.$HOST_COMPILER.cmake ..
+make
