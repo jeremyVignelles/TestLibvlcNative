@@ -35,6 +35,9 @@ if [[ ! -d bin ]]; then
     cp /opt/qt/bin/{Qt5Core,Qt5Gui,Qt5Widgets}.dll bin
     mkdir bin/platforms
     cp /opt/qt/plugins/platforms/qwindows.dll bin/platforms/
+
+    # This is important for the bug to happen
+    rm -rf bin/plugins/audio_output/libmmdevice_plugin.dll
 fi
 
 cd bin

@@ -12,5 +12,5 @@ pkg_check_modules(VLC REQUIRED libvlc)
 include_directories(${VLC_INCLUDE_DIRS})
 link_directories(${VLC_LIBRARY_DIRS})
 
-add_executable(TestLibVLCNative main.cpp player.cpp)
+add_executable(TestLibVLCNative main.cpp)
 target_link_libraries(TestLibVLCNative ${VLC_LIBRARIES} Qt5::Widgets)

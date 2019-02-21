@@ -16,5 +16,5 @@ win32 {
 LIBS += -lvlc -lX11
 
 # Input
-HEADERS += player.h
-SOURCES += main.cpp player.cpp
+HEADERS +=
+SOURCES += main.cpp
