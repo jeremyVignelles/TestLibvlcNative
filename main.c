@@ -17,8 +17,15 @@ int main(int argc, const char **argv)
 
     system("PAUSE");
     printf("length : %ld \n", libvlc_media_player_get_length(media_player));
+    /* // Just add or remove one / here to switch between blocks
+    //Fails with
+    // [000000000303ab20] main input warning: INPUT_CONTROL_SET_TIME 10000000 failed or not possible
     libvlc_media_player_set_time(media_player, 10000);
-
+    /*/
+     // Fails with
+     // [0000000002fe40c0] archive stream_extractor debug: intrinsic seek failed: 'Internal error: No format_seek_data_block function registered' (falling back to dumb seek)
+    libvlc_media_player_set_position(media_player, 0);
+    //*/
     system("PAUSE");
 
     libvlc_media_player_release(media_player);
