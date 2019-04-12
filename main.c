@@ -22,7 +22,7 @@ int main(int argc, const char **argv)
     // [000000000303ab20] main input warning: INPUT_CONTROL_SET_TIME 10000000 failed or not possible
     libvlc_media_player_set_time(media_player, 10000);
     /*/
-     // Fails with
+     // Seeks, but freezes a little and shows
      // [0000000002fe40c0] archive stream_extractor debug: intrinsic seek failed: 'Internal error: No format_seek_data_block function registered' (falling back to dumb seek)
     libvlc_media_player_set_position(media_player, 0);
     //*/
