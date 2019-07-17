@@ -2,7 +2,7 @@
 
 cd `dirname "$0"`
 
-VLC_VERSION=3.0.6
+VLC_VERSION=3.0.7.1
 
 if [[ ! -d vlc-$VLC_VERSION ]]; then
     wget https://get.videolan.org/vlc/$VLC_VERSION/win64/vlc-$VLC_VERSION-win64.7z
