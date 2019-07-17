@@ -22,4 +22,4 @@ if [[ ! -d bin ]]; then
     cp -r $VLC_FOLDER_NAME/plugins bin
 fi
 
-x86_64-w64-mingw32-gcc main.c -I/src/$VLC_FOLDER_NAME/sdk/include -L/src/$VLC_FOLDER_NAME/sdk/lib -lvlccore -lvlc -o bin/testVlc.exe
+x86_64-w64-mingw32-g++ d3d11_player.cpp -I/src/$VLC_FOLDER_NAME/sdk/include -L/src/$VLC_FOLDER_NAME/sdk/lib -lvlc -ld3d11 -ld3dcompiler_47 -luuid -o bin/testVlc.exe
