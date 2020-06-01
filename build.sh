@@ -2,7 +2,7 @@
 
 cd `dirname "$0"`
 
-VLC_VERSION=3.0.7.1
+VLC_VERSION=3.0.10
 
 if [[ ! -d vlc-$VLC_VERSION ]]; then
     wget https://get.videolan.org/vlc/$VLC_VERSION/win64/vlc-$VLC_VERSION-win64.7z
@@ -19,6 +19,7 @@ if [[ ! -d bin ]]; then
     cp -r vlc-$VLC_VERSION/locale bin
     cp -r vlc-$VLC_VERSION/lua bin
     cp -r vlc-$VLC_VERSION/plugins bin
+    cp video.mp4 bin
 fi
 
 x86_64-w64-mingw32-gcc main.c -I/src/vlc-$VLC_VERSION/sdk/include -L/src/vlc-$VLC_VERSION/sdk/lib -lvlccore -lvlc -o bin/testVlc.exe
